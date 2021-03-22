@@ -3,7 +3,7 @@ import {Col, Card, Container, ListGroup} from 'react-bootstrap';
 
 const CardStarship = ({starships}) => {
 	return starships.map((startship) => (
-		<Col md={6} lg={12}>
+		<Col md={6} lg={12} key={startship.id}>
 			<Card>
 				<Card.Header as='h5'>{startship.name}</Card.Header>
 				<Card.Img src={startship.image} />

@@ -13,7 +13,7 @@ function App() {
 
 	useEffect(() => {
 		const getAllStarships = async () => {
-			const {data: starships} = await axios.get('http://localhost:3000/starships');
+			const {data: starships} = await axios.get('http://localhost:5000/starships');
 			setStarships(starships);
 		};
 		getAllStarships();
