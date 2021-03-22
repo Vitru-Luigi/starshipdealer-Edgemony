@@ -2,13 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+# Dependencies
+https://getbootstrap.com/
+https://react-bootstrap.github.io/
+
+https://www.npmjs.com/package/axios
+
+# devDependencies
 https://www.npmjs.com/package/concurrently
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm dev`
+### `npm run dev`
 Runs the app and the server in the development mode.\
 
 ### `npm start`
