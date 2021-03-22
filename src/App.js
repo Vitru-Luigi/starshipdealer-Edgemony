@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Main from './containers/Main';
+import CardStarship from './components/CardStarship';
+
+axios.defaults.headers.post['Contant.type'] = 'application/json';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [starships, setStarships] = useState([]);
+
+	useEffect(() => {
+		const getAllStarships = async () => {
+			const {data: starships} = await axios.get('http://localhost:3000/starships');
+			setStarships(starships);
+		};
+		getAllStarships();
+	}, []);
+
+	return (
+		<Main>
+			<CardStarship starships={starships} />
+		</Main>
+	);
 }
 
 export default App;
