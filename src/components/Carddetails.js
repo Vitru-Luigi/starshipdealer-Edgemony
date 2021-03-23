@@ -3,10 +3,6 @@ import {Modal, Container, ListGroup} from 'react-bootstrap';
 const Carddetails = ({show, handleClose, starship}) => {
 	return (
 		<>
-			{/* <Button variant='primary' onClick={handleShow}>
-				Launch demo modal
-			</Button> */}
-
 			<Modal show={show} handleClose={handleClose} centered>
 				<Modal.Header onClick={handleClose} closeButton>
 					<Modal.Title>{starship.name}</Modal.Title>

@@ -10,11 +10,14 @@ import {Button, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {featchAllShips} from './store/actions';
+import Loader from './components/Loader';
+import Message from './components/Message';
 
 axios.defaults.headers.post['Contant.type'] = 'application/json';
 
 function App() {
 	// const [starships, setStarships] = useState([]);
+	// const [errMsg, setErrMsg] = useState('');
 	const [showFormModal, setShowFormModal] = useState(false);
 
 	const [newStarShip, setNewStarShip] = useState({});
@@ -29,7 +32,8 @@ function App() {
 	// }, []);
 
 	const dispatch = useDispatch();
-	const starships = useSelector((state) => state.starships);
+	const starshipsState = useSelector((state) => state);
+	const {loading, error, starships} = starshipsState;
 
 	useEffect(() => {
 		dispatch(featchAllShips());
@@ -63,13 +67,18 @@ function App() {
 
 	return (
 		<>
-			<Main>
-				{starships?.map((starship) => (
-					<Col md={6} lg={4} key={starship.id} className='my-3'>
-						<CardStarship starship={starship} />
-					</Col>
-				))}
-			</Main>
+			{error && <Message variant='warning' msg={error} />}
+			{loading ? (
+				<Loader />
+			) : (
+				<Main>
+					{starships?.map((starship) => (
+						<Col md={6} lg={4} key={starship.id} className='my-3'>
+							<CardStarship starship={starship} />
+						</Col>
+					))}
+				</Main>
+			)}
 			<StarShipForm show={showFormModal} handleClose={handleClose} onInputChange={onInputChange} addPost={addNewStarShip} />
 			<Button onClick={handleShow} size='lg' style={{position: 'fixed', bottom: '200px', right: '200px'}}>
 				+

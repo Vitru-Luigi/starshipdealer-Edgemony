@@ -8,8 +8,9 @@ export const featchAllShips = () => {
 		try {
 			const {data: starships} = await axios.get('http://localhost:5000/starships');
 			dispatch({type: FETCH_ALL_STARSHIPS_SUCCESS, payload: starships});
-		} catch (error) {
-			console.error(error);
+		} catch (e) {
+			// console.error(error);
+			throw new Error(e);
 		}
 	};
 };
