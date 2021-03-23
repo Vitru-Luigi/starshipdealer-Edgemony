@@ -7,6 +7,12 @@ https://react-bootstrap.github.io/
 
 https://www.npmjs.com/package/axios
 
+https://redux.js.org/
+https://react-redux.js.org/
+https://github.com/reduxjs/redux-thunk
+https://www.npmjs.com/package/redux-devtools-extension
+
+
 ## devDependencies
 https://www.npmjs.com/package/concurrently
 
