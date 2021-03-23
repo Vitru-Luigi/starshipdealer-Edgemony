@@ -1,34 +1,54 @@
-import React from 'react';
-import {Col, Card, Container, ListGroup} from 'react-bootstrap';
+import axios from 'axios';
+import {useState} from 'react';
+import {Card, Container, Button} from 'react-bootstrap';
 
-const CardStarship = ({starships}) => {
-	return starships.map((starship) => (
-		<Col md={6} lg={4} key={starship.id}>
-			<Card>
-				<Card.Header as='h5'>{starship.name}</Card.Header>
-				<Card.Img src={starship.image} alt={starship.name} />
-				<Card.Body>
-					<Card.Title>{starship.model}</Card.Title>
-					<Card.Text>{starship.manufacturer}</Card.Text>
-				</Card.Body>
-				<Container>
-					<ListGroup variant='flush'>
-						<ListGroup.Item>length: {starship.length} meters</ListGroup.Item>
-						<ListGroup.Item>crew: {starship.crew}</ListGroup.Item>
-						<ListGroup.Item>passengers: {starship.passengers}</ListGroup.Item>
-						<ListGroup.Item>cargo capacity: {starship.cargo_capacity} meters</ListGroup.Item>
-						<ListGroup.Item>consumables: {starship.consumables} </ListGroup.Item>
-						<ListGroup.Item>hyperdrive rating: {starship.hyperdrive_rating} </ListGroup.Item>
-						<ListGroup.Item>max atmosphering speed: {starship.max_atmosphering_speed} </ListGroup.Item>
-						<ListGroup.Item>MGLT: {starship.MGLT} </ListGroup.Item>
-					</ListGroup>
-				</Container>
-				<Card.Footer>
-					<small className='text-muted'>Credits : {starship.cost_in_credits}</small>
-				</Card.Footer>
-			</Card>
-		</Col>
-	));
+import {useDispatch} from 'react-redux';
+import {featchAllShips} from '../store/actions';
+
+import Carddetails from './Carddetails';
+
+const CardStarship = ({starship, fetchAll}) => {
+	const dispatch = useDispatch();
+	const [open, setOpen] = useState(false);
+	const handleClose = () => setOpen(false);
+	const handleShow = () => setOpen(true);
+
+	const deleteStarship = async () => {
+		try {
+			const res = await axios.delete(`http://localhost:5000/starships/${starship.id}`);
+			if (res.status !== 200) {
+				throw new Error('Delete Failed');
+			}
+			dispatch(featchAllShips());
+			// fetchAll();
+		} catch (e) {
+			alert(e);
+		}
+	};
+
+	return (
+		<Card>
+			<Card.Header as='h5'>{starship.name}</Card.Header>
+			<Card.Img src={starship.image} alt={starship.name} />
+			<Card.Body>
+				<Card.Title>{starship.model}</Card.Title>
+				<Card.Text>{starship.manufacturer}</Card.Text>
+			</Card.Body>
+
+			<Container className='d-flex justify-content-around my-3'>
+				<Button variant='primary' onClick={handleShow}>
+					Details
+				</Button>
+				<Button variant='secondary' onClick={deleteStarship}>
+					Delete
+				</Button>
+			</Container>
+			<Card.Footer>
+				<small className='text-muted'>Credits : {starship.cost_in_credits}</small>
+			</Card.Footer>
+			<Carddetails starship={starship} show={open} handleClose={handleClose} />
+		</Card>
+	);
 };
 
 export default CardStarship;

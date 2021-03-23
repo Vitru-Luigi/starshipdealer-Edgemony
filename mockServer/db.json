@@ -216,7 +216,7 @@
       "url": "http://swapi.dev/api/starships/15/"
     }
   ],
-  "test" : {
+  "test": {
     "prova": "prova"
   }
 }
