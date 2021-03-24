@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Card, Container, Button} from 'react-bootstrap';
 
 import {useDispatch} from 'react-redux';
-import {deleteShip} from '../store/actions';
+import {deleteShip} from '../redux/starships/starshipActions';
 
 import SimpleCardDetail from './SimpleCardDetail';
 

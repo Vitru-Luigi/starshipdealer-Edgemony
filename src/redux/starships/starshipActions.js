@@ -10,7 +10,7 @@ import {
 	FETCH_ALL_STARSHIPS_ERROR,
 	FETCH_ALL_STARSHIPS_REQUEST,
 	FETCH_ALL_STARSHIPS_SUCCESS,
-} from './constants';
+} from './starshipConstants';
 
 export const fetchAllShips = () => {
 	return async (dispatch) => {

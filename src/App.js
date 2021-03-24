@@ -9,9 +9,10 @@ import StarShipForm from './components/StarShipForm';
 import {Button, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {addShip, fetchAllShips} from './store/actions';
+import {addShip, fetchAllShips} from './redux/starships/starshipActions';
 import Loader from './components/Loader';
 import Message from './components/Message';
+import Header from './components/Header';
 
 axios.defaults.headers.post['Contant.type'] = 'application/json';
 
@@ -20,12 +21,24 @@ function App() {
 	const [newStarShip, setNewStarShip] = useState({});
 
 	const dispatch = useDispatch();
-	const starshipsState = useSelector((state) => state);
-	const {loading, error, starships} = starshipsState;
 
-	useEffect(() => {
-		dispatch(fetchAllShips());
-	}, [dispatch]);
+	const starshipDelete = useSelector((state) => state.starshipDelete);
+	const {success: successDelete} = starshipDelete;
+
+	const starshipAdd = useSelector((state) => state.starshipAdd);
+	const {success: successAdd} = starshipAdd;
+
+	const starshipList = useSelector((state) => state.starshipList);
+	const {loading, error, starships} = starshipList;
+
+	const addNewStarShip = async (e) => {
+		e.preventDefault();
+		if (checkForm()) {
+			dispatch(addShip(newStarShip));
+		} else {
+			throw new Error('Form not valid');
+		}
+	};
 
 	const onInputChange = (e) => {
 		setNewStarShip((starship) => ({...starship, [e.target.name]: e.target.value}));
@@ -42,17 +55,13 @@ function App() {
 
 	const checkForm = () => newStarShip.name && newStarShip.manufacturer && newStarShip.image && newStarShip.crew >= 0 && newStarShip.passengers >= 0 && newStarShip.cargo_capacity >= 0;
 
-	const addNewStarShip = async (e) => {
-		e.preventDefault();
-		if (checkForm()) {
-			dispatch(addShip(newStarShip));
-		} else {
-			throw new Error('Form not valid');
-		}
-	};
+	useEffect(() => {
+		dispatch(fetchAllShips());
+	}, [dispatch, successDelete, successAdd]);
 
 	return (
 		<>
+			<Header />
 			{error && <Message variant='warning' msg={error} />}
 			{loading ? (
 				<Loader />

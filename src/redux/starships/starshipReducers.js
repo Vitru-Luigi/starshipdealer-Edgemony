@@ -1,12 +1,23 @@
-import {ADD_STARSHIP_ERROR, ADD_STARSHIP_REQUEST, ADD_STARSHIP_SUCCESS, DELETE_STARSHIP_REQUEST, DELETE_STARSHIP_SUCCESS, DISCARD_ERROR, FETCH_ALL_STARSHIPS_ERROR, FETCH_ALL_STARSHIPS_REQUEST, FETCH_ALL_STARSHIPS_SUCCESS} from './constants';
+import {
+	FETCH_ALL_STARSHIPS_REQUEST,
+	FETCH_ALL_STARSHIPS_SUCCESS,
+	FETCH_ALL_STARSHIPS_ERROR,
+	ADD_STARSHIP_REQUEST,
+	ADD_STARSHIP_SUCCESS,
+	ADD_STARSHIP_ERROR,
+	DELETE_STARSHIP_REQUEST,
+	DELETE_STARSHIP_SUCCESS,
+	DELETE_STARSHIP_ERROR,
+} from './starshipConstants';
 
 const defaultState = {
 	starships: [],
 	error: null,
+	success: null,
 	loading: false,
 };
 
-export const starshipReducer = (state = defaultState, action) => {
+export const starshipListReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case FETCH_ALL_STARSHIPS_REQUEST:
 			return {
@@ -18,6 +29,7 @@ export const starshipReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				loading: false,
+				success: true,
 				starships: action.payload,
 			};
 
@@ -28,6 +40,13 @@ export const starshipReducer = (state = defaultState, action) => {
 				error: action.payload,
 			};
 
+		default:
+			return state;
+	}
+};
+
+export const starshipAddReducer = (state = defaultState, action) => {
+	switch (action.type) {
 		case ADD_STARSHIP_REQUEST:
 			return {
 				...state,
@@ -37,8 +56,9 @@ export const starshipReducer = (state = defaultState, action) => {
 		case ADD_STARSHIP_SUCCESS:
 			return {
 				...state,
-				starships: [...state.starships, action.payload],
 				loading: false,
+				success: true,
+				starships: [...state.starships, action.payload],
 			};
 
 		case ADD_STARSHIP_ERROR:
@@ -47,6 +67,13 @@ export const starshipReducer = (state = defaultState, action) => {
 				error: action.payload,
 			};
 
+		default:
+			return state;
+	}
+};
+
+export const starshipDeleteReducer = (state = defaultState, action) => {
+	switch (action.type) {
 		case DELETE_STARSHIP_REQUEST:
 			return {
 				...state,
@@ -57,15 +84,23 @@ export const starshipReducer = (state = defaultState, action) => {
 			return {
 				...state,
 				loading: false,
+				success: true,
 				starships: state.starships.filter((starship) => starship.id !== action.payload),
 			};
-		case DISCARD_ERROR:
+
+		case DELETE_STARSHIP_ERROR:
 			return {
 				...state,
-				error: null,
+				error: action.payload,
 			};
 
 		default:
 			return state;
 	}
 };
+
+// case DISCARD_ERROR:
+// 	return {
+// 		...state,
+// 		error: null,
+// 	};
