@@ -1,29 +1,19 @@
-import axios from 'axios';
 import {useState} from 'react';
 import {Card, Container, Button} from 'react-bootstrap';
 
 import {useDispatch} from 'react-redux';
-import {featchAllShips} from '../store/actions';
+import {deleteShip} from '../store/actions';
 
-import Carddetails from './Carddetails';
+import SimpleCardDetail from './SimpleCardDetail';
 
-const CardStarship = ({starship, fetchAll}) => {
-	const dispatch = useDispatch();
+const SimpleCard = ({starship}) => {
 	const [open, setOpen] = useState(false);
 	const handleClose = () => setOpen(false);
 	const handleShow = () => setOpen(true);
 
+	const dispatch = useDispatch();
 	const deleteStarship = async () => {
-		try {
-			const res = await axios.delete(`http://localhost:5000/starships/${starship.id}`);
-			if (res.status !== 200) {
-				throw new Error('Delete Failed');
-			}
-			dispatch(featchAllShips());
-			// fetchAll();
-		} catch (e) {
-			alert(e);
-		}
+		dispatch(deleteShip(starship.id));
 	};
 
 	return (
@@ -46,9 +36,9 @@ const CardStarship = ({starship, fetchAll}) => {
 			<Card.Footer>
 				<small className='text-muted'>Credits : {starship.cost_in_credits}</small>
 			</Card.Footer>
-			<Carddetails starship={starship} show={open} handleClose={handleClose} />
+			<SimpleCardDetail starship={starship} show={open} handleClose={handleClose} />
 		</Card>
 	);
 };
 
-export default CardStarship;
+export default SimpleCard;

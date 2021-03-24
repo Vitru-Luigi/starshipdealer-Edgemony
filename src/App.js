@@ -4,39 +4,27 @@ import {useEffect, useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Main from './containers/Main';
-import CardStarship from './components/CardStarship';
+import SimpleCard from './components/SimpleCard';
 import StarShipForm from './components/StarShipForm';
 import {Button, Col} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {featchAllShips} from './store/actions';
+import {addShip, fetchAllShips} from './store/actions';
 import Loader from './components/Loader';
 import Message from './components/Message';
 
 axios.defaults.headers.post['Contant.type'] = 'application/json';
 
 function App() {
-	// const [starships, setStarships] = useState([]);
-	// const [errMsg, setErrMsg] = useState('');
 	const [showFormModal, setShowFormModal] = useState(false);
-
 	const [newStarShip, setNewStarShip] = useState({});
-
-	// const getAllStarships = async () => {
-	// 	const {data: starships} = await axios.get('http://localhost:5000/starships');
-	// };
-
-	// useEffect(() => {
-	// setStarships(starships);
-	// getAllStarships();
-	// }, []);
 
 	const dispatch = useDispatch();
 	const starshipsState = useSelector((state) => state);
 	const {loading, error, starships} = starshipsState;
 
 	useEffect(() => {
-		dispatch(featchAllShips());
+		dispatch(fetchAllShips());
 	}, [dispatch]);
 
 	const onInputChange = (e) => {
@@ -57,9 +45,7 @@ function App() {
 	const addNewStarShip = async (e) => {
 		e.preventDefault();
 		if (checkForm()) {
-			await axios.post('http://localhost:5000/starships', newStarShip);
-			// await getAllStarships();
-			dispatch(featchAllShips());
+			dispatch(addShip(newStarShip));
 		} else {
 			throw new Error('Form not valid');
 		}
@@ -74,7 +60,7 @@ function App() {
 				<Main>
 					{starships?.map((starship) => (
 						<Col md={6} lg={4} key={starship.id} className='my-3'>
-							<CardStarship starship={starship} />
+							<SimpleCard starship={starship} />
 						</Col>
 					))}
 				</Main>

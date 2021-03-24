@@ -1,6 +1,6 @@
 import {Modal, Container, ListGroup} from 'react-bootstrap';
 
-const Carddetails = ({show, handleClose, starship}) => {
+const SimpleCardDetail = ({show, handleClose, starship}) => {
 	return (
 		<>
 			<Modal show={show} handleClose={handleClose} centered>
@@ -26,4 +26,4 @@ const Carddetails = ({show, handleClose, starship}) => {
 	);
 };
 
-export default Carddetails;
+export default SimpleCardDetail;

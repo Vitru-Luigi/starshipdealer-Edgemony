@@ -1,8 +1,8 @@
 import {ADD_STARSHIP_ERROR, ADD_STARSHIP_REQUEST, ADD_STARSHIP_SUCCESS, DELETE_STARSHIP_REQUEST, DELETE_STARSHIP_SUCCESS, DISCARD_ERROR, FETCH_ALL_STARSHIPS_ERROR, FETCH_ALL_STARSHIPS_REQUEST, FETCH_ALL_STARSHIPS_SUCCESS} from './constants';
 
 const defaultState = {
-	starShips: [],
-	error: undefined,
+	starships: [],
+	error: null,
 	loading: false,
 };
 
@@ -56,10 +56,9 @@ export const starshipReducer = (state = defaultState, action) => {
 		case DELETE_STARSHIP_SUCCESS:
 			return {
 				...state,
-				starships: state.starships.filter((starship) => starship.id !== action.payload),
 				loading: false,
+				starships: state.starships.filter((starship) => starship.id !== action.payload),
 			};
-
 		case DISCARD_ERROR:
 			return {
 				...state,
