@@ -13,23 +13,19 @@ import {addShip, fetchAllShips} from './redux/starships/starshipActions';
 import Loader from './components/Loader';
 import Message from './components/Message';
 import Header from './components/Header';
+import LoginForm from './components/LoginForm';
 
 axios.defaults.headers.post['Contant.type'] = 'application/json';
 
 function App() {
 	const [showFormModal, setShowFormModal] = useState(false);
+	const [showUserFormModal, setShowUserFormModal] = useState(false);
 	const [newStarShip, setNewStarShip] = useState({});
 
 	const dispatch = useDispatch();
 
-	const starshipDelete = useSelector((state) => state.starshipDelete);
-	const {success: successDelete} = starshipDelete;
-
-	const starshipAdd = useSelector((state) => state.starshipAdd);
-	const {success: successAdd} = starshipAdd;
-
-	const starshipList = useSelector((state) => state.starshipList);
-	const {loading, error, starships} = starshipList;
+	const starshipsState = useSelector((state) => state.starships);
+	const {loading, error, starships} = starshipsState;
 
 	const addNewStarShip = async (e) => {
 		e.preventDefault();
@@ -40,9 +36,13 @@ function App() {
 		}
 	};
 
-	const onInputChange = (e) => {
+	const onStarshipFormChange = (e) => {
 		setNewStarShip((starship) => ({...starship, [e.target.name]: e.target.value}));
 	};
+
+	// const onUserFormChange = (e) => {
+	// 	setNewStarShip((starship) => ({...starship, [e.target.name]: e.target.value}));
+	// };
 
 	const handleClose = () => {
 		setShowFormModal(false);
@@ -53,15 +53,23 @@ function App() {
 		setShowFormModal(true);
 	};
 
+	const handleShowUserForm = () => {
+		setShowUserFormModal(true);
+	};
+
+	const handleCloseUserForm = () => {
+		setShowUserFormModal(false);
+	};
+
 	const checkForm = () => newStarShip.name && newStarShip.manufacturer && newStarShip.image && newStarShip.crew >= 0 && newStarShip.passengers >= 0 && newStarShip.cargo_capacity >= 0;
 
 	useEffect(() => {
 		dispatch(fetchAllShips());
-	}, [dispatch, successDelete, successAdd]);
+	}, [dispatch]);
 
 	return (
 		<>
-			<Header />
+			<Header show={handleShowUserForm} />
 			{error && <Message variant='warning' msg={error} />}
 			{loading ? (
 				<Loader />
@@ -74,7 +82,8 @@ function App() {
 					))}
 				</Main>
 			)}
-			<StarShipForm show={showFormModal} handleClose={handleClose} onInputChange={onInputChange} addPost={addNewStarShip} />
+			<StarShipForm show={showFormModal} handleClose={handleClose} onInputChange={onStarshipFormChange} addPost={addNewStarShip} />
+			<LoginForm show={showUserFormModal} handleClose={handleCloseUserForm} />
 			<Button onClick={handleShow} size='lg' style={{position: 'fixed', bottom: '200px', right: '200px'}}>
 				+
 			</Button>

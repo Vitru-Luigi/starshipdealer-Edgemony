@@ -214,6 +214,15 @@
       "created": "2014-12-15T12:31:42.547000Z",
       "edited": "2014-12-20T21:23:49.893000Z",
       "url": "http://swapi.dev/api/starships/15/"
+    },
+    {
+      "name": "Luigi",
+      "manufacturer": "asdasd",
+      "image": "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.r74TteM0gjx7G0Oi_N7FIAHaJq%26pid%3DApi&f=1",
+      "crew": "123",
+      "passengers": "120",
+      "cargo_capacity": "123123",
+      "id": 9
     }
   ],
   "test": {

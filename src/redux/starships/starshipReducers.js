@@ -1,23 +1,12 @@
-import {
-	FETCH_ALL_STARSHIPS_REQUEST,
-	FETCH_ALL_STARSHIPS_SUCCESS,
-	FETCH_ALL_STARSHIPS_ERROR,
-	ADD_STARSHIP_REQUEST,
-	ADD_STARSHIP_SUCCESS,
-	ADD_STARSHIP_ERROR,
-	DELETE_STARSHIP_REQUEST,
-	DELETE_STARSHIP_SUCCESS,
-	DELETE_STARSHIP_ERROR,
-} from './starshipConstants';
+import {ADD_STARSHIP_ERROR, ADD_STARSHIP_REQUEST, ADD_STARSHIP_SUCCESS, DELETE_STARSHIP_REQUEST, DELETE_STARSHIP_SUCCESS, DISCARD_ERROR, FETCH_ALL_STARSHIPS_ERROR, FETCH_ALL_STARSHIPS_REQUEST, FETCH_ALL_STARSHIPS_SUCCESS} from './starshipConstants';
 
-const defaultState = {
-	starships: [],
-	error: null,
-	success: null,
-	loading: false,
-};
+// const {} = {
+// 	starships: [],
+// 	error: null,
+// 	loading: false,
+// };
 
-export const starshipListReducer = (state = defaultState, action) => {
+export const starshipReducers = (state = {}, action) => {
 	switch (action.type) {
 		case FETCH_ALL_STARSHIPS_REQUEST:
 			return {
@@ -40,13 +29,6 @@ export const starshipListReducer = (state = defaultState, action) => {
 				error: action.payload,
 			};
 
-		default:
-			return state;
-	}
-};
-
-export const starshipAddReducer = (state = defaultState, action) => {
-	switch (action.type) {
 		case ADD_STARSHIP_REQUEST:
 			return {
 				...state,
@@ -67,13 +49,6 @@ export const starshipAddReducer = (state = defaultState, action) => {
 				error: action.payload,
 			};
 
-		default:
-			return state;
-	}
-};
-
-export const starshipDeleteReducer = (state = defaultState, action) => {
-	switch (action.type) {
 		case DELETE_STARSHIP_REQUEST:
 			return {
 				...state,
@@ -87,20 +62,13 @@ export const starshipDeleteReducer = (state = defaultState, action) => {
 				success: true,
 				starships: state.starships.filter((starship) => starship.id !== action.payload),
 			};
-
-		case DELETE_STARSHIP_ERROR:
+		case DISCARD_ERROR:
 			return {
 				...state,
-				error: action.payload,
+				error: null,
 			};
 
 		default:
 			return state;
 	}
 };
-
-// case DISCARD_ERROR:
-// 	return {
-// 		...state,
-// 		error: null,
-// 	};

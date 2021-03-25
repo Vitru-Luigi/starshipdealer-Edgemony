@@ -2,19 +2,27 @@ import {applyMiddleware, combineReducers, createStore} from 'redux';
 import thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 
-import {starshipListReducer, starshipAddReducer, starshipDeleteReducer} from './starships/starshipReducers';
+import {starshipReducers} from './starships/starshipReducers';
+import {userReducers} from './users/userReducer';
 
 /* Combined Reducers */
 const reducer = combineReducers({
-	starshipList: starshipListReducer,
-	starshipAdd: starshipAddReducer,
-	starshipDelete: starshipDeleteReducer,
+	starships: starshipReducers,
+	user: userReducers,
 });
 
 const defaultStore = {
-	starShips: [],
-	error: undefined,
-	loading: false,
+	user: {
+		name: '',
+		lastname: '',
+		email: '',
+		isLogged: false,
+	},
+	starships: {
+		starships: [],
+		error: null,
+		loading: false,
+	},
 };
 
 const middleware = [thunk];
